@@ -28,15 +28,18 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId);
     // messages
+    console.log('user-connected', userId);
     socket.on('message', (message) => {
       //send message to the same room
       io.to(roomId).emit('createMessage', message)
+    console.log('createMessage', message);
   }); 
 
     socket.on('disconnect', () => {
       socket.to(roomId).broadcast.emit('user-disconnected', userId)
+      console.log('user-disconnected', userId);
     })
   })
 })
 
-server.listen(process.env.PORT||3000)
+server.listen(process.env.PORT||3030)
